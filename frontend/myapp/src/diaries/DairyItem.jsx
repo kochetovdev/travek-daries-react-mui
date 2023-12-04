@@ -12,8 +12,16 @@ import {
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
-const DairyItem = ({ title, description, image, location, date, id }) => {
+const DairyItem = ({ title, description, image, location, date, user, id }) => {
+  const isLoogedInUser = () => {
+    if (localStorage.getItem("userId") === user) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <Card
       sx={{
@@ -27,11 +35,7 @@ const DairyItem = ({ title, description, image, location, date, id }) => {
       }}
     >
       <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            
-          </Avatar>
-        }
+        avatar={<Avatar sx={{ bgcolor: "red" }} aria-label="recipe"></Avatar>}
         action={
           <IconButton aria-label="settings">
             <EditLocationAltIcon />
@@ -41,11 +45,7 @@ const DairyItem = ({ title, description, image, location, date, id }) => {
         header={location}
         subheader={date}
       />
-      <img
-        height="194"
-        src={image}
-        alt={title}
-      />
+      <img height="194" src={image} alt={title} />
       <CardContent>
         <Typography paddingBottom={1} variant="h6" color="text.secondary">
           {title}
@@ -60,14 +60,16 @@ const DairyItem = ({ title, description, image, location, date, id }) => {
           </Typography>
         </Box>
       </CardContent>
-      <CardActions sx={{ marginLeft: "auto" }}>
-        <IconButton color="warning">
-          <ModeEditIcon />
-        </IconButton>
-        <IconButton color="error">
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>
+      {isLoogedInUser && (
+        <CardActions sx={{ marginLeft: "auto" }}>
+          <IconButton LinkComponent={Link} to={`/post/${id}`} color="warning">
+            <ModeEditIcon />
+          </IconButton>
+          <IconButton color="error">
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      )}
     </Card>
   );
 };

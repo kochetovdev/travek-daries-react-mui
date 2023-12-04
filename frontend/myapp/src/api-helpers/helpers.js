@@ -34,7 +34,7 @@ export const sendAuthRequest = async (signup, data) => {
 
 export const addPost = async (data) => {
   const res = await axios
-    .post("/posts/", {
+    .post(`${BASE_URL}/posts/`, {
       title: data.title,
       description: data.description,
       location: data.location,
@@ -46,6 +46,34 @@ export const addPost = async (data) => {
 
   if (res.status !== 201) {
     return console.log("Error Occurred");
+  }
+
+  const resData = await res.data;
+  return resData;
+};
+
+export const getPostDetails = async (id) => {
+  const res = await axios.get(`${BASE_URL}/posts/${id}`).catch((err) => console.log(err));
+  if (res.status !== 200) {
+    return console.log("Unable to fetch diary");
+  }
+
+  const resData = await res.data;
+  return resData;
+};
+
+export const postUpdate = async (data, id) => {
+  const res = await axios
+    .put(`${BASE_URL}/posts/${id}`, {
+      title: data.title,
+      description: data.description,
+      location: data.location,
+      image: data.imageUrl,
+    })
+    .catch((err) => console.log(err));
+
+  if (res.status !== 200) {
+    return console.log("Unable to udpate");
   }
 
   const resData = await res.data;
