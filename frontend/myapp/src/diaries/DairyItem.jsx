@@ -18,7 +18,7 @@ const DairyItem = ({ title, description, image, location, date, id }) => {
     <Card
       sx={{
         width: "50%",
-        height: "60vh",
+        height: "70vh",
         margin: 1,
         padding: 1,
         display: "flex",
