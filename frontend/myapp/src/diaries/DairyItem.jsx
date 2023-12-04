@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -8,18 +8,39 @@ import {
   CardActions,
   Typography,
   Box,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import { postDelete } from "../api-helpers/helpers";
 
-const DairyItem = ({ title, description, image, location, date, user, id }) => {
+const DairyItem = ({
+  title,
+  description,
+  image,
+  location,
+  date,
+  user,
+  id,
+  name,
+}) => {
+  const [open, setOpen] = useState(false);
+
   const isLoogedInUser = () => {
     if (localStorage.getItem("userId") === user) {
       return true;
     }
     return false;
+  };
+
+  const handleDelete = () => {
+    postDelete(id)
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+    setOpen(true);
   };
 
   return (
@@ -35,7 +56,11 @@ const DairyItem = ({ title, description, image, location, date, user, id }) => {
       }}
     >
       <CardHeader
-        avatar={<Avatar sx={{ bgcolor: "red" }} aria-label="recipe"></Avatar>}
+        avatar={
+          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
+            {name.charAt(0)}
+          </Avatar>
+        }
         action={
           <IconButton aria-label="settings">
             <EditLocationAltIcon />
@@ -53,7 +78,7 @@ const DairyItem = ({ title, description, image, location, date, user, id }) => {
         <hr />
         <Box display="flex" paddingTop={1}>
           <Typography width="170px" fontWeight="bold" variant="caption">
-            Kochetov Yevhen:
+            {name}:
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {description}
@@ -65,11 +90,25 @@ const DairyItem = ({ title, description, image, location, date, user, id }) => {
           <IconButton LinkComponent={Link} to={`/post/${id}`} color="warning">
             <ModeEditIcon />
           </IconButton>
-          <IconButton color="error">
+          <IconButton onClick={handleDelete} color="error">
             <DeleteIcon />
           </IconButton>
         </CardActions>
       )}
+
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          This is a success message!
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };

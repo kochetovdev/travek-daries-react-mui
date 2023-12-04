@@ -14,7 +14,6 @@ const DiaryUpdate = () => {
     imageUrl: "",
   });
   const id = useParams().id;
-  console.log(id);
   useEffect(() => {
     getPostDetails(id)
       .then((data) => {
@@ -38,7 +37,7 @@ const DiaryUpdate = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+
     postUpdate(inputs, id)
       .then((data) => console.log(data))
       .catch((err) => console.log(err));

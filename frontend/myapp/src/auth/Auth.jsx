@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import { Box, Typography, FormLabel, TextField, Button } from "@mui/material";
 import { sendAuthRequest } from "../api-helpers/helpers";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { authActions } from "../store";
 
 const Auth = () => {
   const [signup, setSignup] = useState(false);
   const [inputs, setInputs] = useState({ name: "", email: "", password: "" });
   const dispatch = useDispatch();
+  const naviagte = useNavigate();
+
+  const onResReceived = (data) => {
+    if (signup) {
+      localStorage.setItem("userId", data.user._id);
+    } else {
+      localStorage.setItem("userId", data.id);
+    }
+    dispatch(authActions.login());
+    naviagte("/diaries");
+  };
 
   const changeStatus = () => {
     setSignup(!signup);
@@ -18,13 +30,11 @@ const Auth = () => {
 
     if (signup) {
       sendAuthRequest(true, inputs)
-        .then((data) => localStorage.setItem('userId', data.user._id))
-        .then(() => dispatch(authActions.login()))
+        .then(onResReceived)
         .catch((err) => console.log(err));
     } else {
       sendAuthRequest(false, inputs)
-        .then((data) => localStorage.setItem('userId', data.id))
-        .then(() => dispatch(authActions.login()))
+        .then(onResReceived)
         .catch((err) => console.log(err));
     }
   };

@@ -22,13 +22,12 @@ const Add = () => {
   };
 
   const onResReceived = (data) => {
-    console.log(data);
     navigate("/diaries");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+
     addPost(inputs)
       .then(onResReceived)
       .catch((err) => console.log(err));

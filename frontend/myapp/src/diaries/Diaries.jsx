@@ -30,7 +30,8 @@ const Diaries = () => {
             date={new Date(`${post.date}`).toLocaleDateString()}
             id={post._id}
             key={post._id}
-            user={post.user}
+            user={post.user._id}
+            name={post.user.name}
           />
         ))}
     </Box>
