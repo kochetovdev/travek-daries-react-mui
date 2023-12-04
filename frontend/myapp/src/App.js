@@ -3,8 +3,11 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./home/Home";
 import Diaries from "./diaries/Diaries";
 import Auth from "./auth/Auth";
+import { useSelector } from "react-redux";
 
 function App() {
+  const isLoggedIn = useSelector(state => state.isLoggedIn);
+
   return (
     <div>
       <header>
