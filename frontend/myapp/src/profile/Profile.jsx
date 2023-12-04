@@ -57,13 +57,13 @@ const Profile = () => {
             justifyContent="center"
             alignItems={"center"}
           >
-            {user.posts.map((post, index) => (
+            {user.posts.map((post) => (
               <DairyItem
-                key={index}
+                key={post.id}
                 title={post.title}
                 date={new Date(`${post.date}`).toLocaleDateString()}
                 description={post.description}
-                id={post.id}
+                id={post._id}
                 image={post.image}
                 location={post.location}
                 user={user._id}
