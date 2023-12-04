@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const links = ["home", "diaries", "auth"];
 
 const Header = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
 
   return (
     <AppBar sx={{ bgcolor: "transparent", position: "sticky" }}>
@@ -15,7 +15,7 @@ const Header = () => {
         <Tabs
           value={value}
           onChange={(event, value) => setValue(value)}
-          sx={{ ml: "auto", textDecoration: "none" }}
+          sx={{ ml: "auto", textDecoration: "none" }} 
         >
           {links.map((link) => (
             <Tab

@@ -13,7 +13,7 @@ import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const DairyItem = () => {
+const DairyItem = ({ title, description, image, location, date, id }) => {
   return (
     <Card
       sx={{
@@ -29,7 +29,7 @@ const DairyItem = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            R
+            
           </Avatar>
         }
         action={
@@ -37,17 +37,18 @@ const DairyItem = () => {
             <EditLocationAltIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={location}
+        header={location}
+        subheader={date}
       />
       <img
         height="194"
-        image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
+        src={image}
+        alt={title}
       />
       <CardContent>
         <Typography paddingBottom={1} variant="h6" color="text.secondary">
-          This impressive paella
+          {title}
         </Typography>
         <hr />
         <Box display="flex" paddingTop={1}>
@@ -55,9 +56,7 @@ const DairyItem = () => {
             Kochetov Yevhen:
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to
-            cook together with your guests. Add 1 cup of frozen peas along with
-            the mussels, if you like.
+            {description}
           </Typography>
         </Box>
       </CardContent>
