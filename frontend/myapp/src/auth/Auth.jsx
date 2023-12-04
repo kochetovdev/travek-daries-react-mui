@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Box, Typography, FormLabel, TextField, Button } from "@mui/material";
 import { sendAuthRequest } from "../api-helpers/helpers";
+import { useDispatch } from "react-redux";
+import { authActions } from "../store";
 
 const Auth = () => {
   const [signup, setSignup] = useState(false);
   const [inputs, setInputs] = useState({ name: "", email: "", password: "" });
+  const dispatch = useDispatch();
 
   const changeStatus = () => {
     setSignup(!signup);
@@ -15,11 +18,13 @@ const Auth = () => {
 
     if (signup) {
       sendAuthRequest(true, inputs)
-        .then((data) => console.log(data))
+        .then((data) => localStorage.setItem('userId', data.user._id))
+        .then(() => dispatch(authActions.login()))
         .catch((err) => console.log(err));
     } else {
       sendAuthRequest(false, inputs)
-        .then((data) => console.log(data))
+        .then((data) => localStorage.setItem('userId', data.id))
+        .then(() => dispatch(authActions.login()))
         .catch((err) => console.log(err));
     }
   };
@@ -30,6 +35,7 @@ const Auth = () => {
       [event.target.name]: event.target.value,
     }));
   };
+
   return (
     <Box
       width="40%"
@@ -87,7 +93,6 @@ const Auth = () => {
           <Button
             sx={{ mt: 2, borderRadius: 10 }}
             variant="outlined"
-            type="submit"
             onClick={changeStatus}
           >
             Change to {signup ? "Login" : "Sing up"}
