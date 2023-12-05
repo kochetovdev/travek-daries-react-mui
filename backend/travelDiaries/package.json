@@ -25,6 +25,9 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.3.2"
   },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
