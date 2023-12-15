@@ -1,6 +1,6 @@
 import { Button, FormLabel, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getPostDetails, postUpdate } from "../api-helpers/helpers";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
@@ -65,40 +65,18 @@ const DiaryUpdate = () => {
             margin="auto"
             flexDirection={"column"}
           >
-            <FormLabel sx={{ fontFamily: "quicksand" }}>Title</FormLabel>
-            <TextField
-              onChange={handleChange}
-              name="title"
-              value={inputs.title}
-              variant="standard"
-              margin="normal"
-            />
-            <FormLabel sx={{ fontFamily: "quicksand" }}>Description</FormLabel>
-            <TextField
-              onChange={handleChange}
-              name="description"
-              value={inputs.description}
-              variant="standard"
-              margin="normal"
-            />
-            <FormLabel sx={{ fontFamily: "quicksand" }}>Image URL</FormLabel>
-            <TextField
-              onChange={handleChange}
-              name="imageUrl"
-              value={inputs.imageUrl}
-              variant="standard"
-              margin="normal"
-            />
-
-            <FormLabel sx={{ fontFamily: "quicksand" }}>Location</FormLabel>
-            <TextField
-              onChange={handleChange}
-              name="location"
-              value={inputs.location}
-              variant="standard"
-              margin="normal"
-            />
-
+            {Object.keys(inputs).map((key) => (
+              <Fragment key={key}>
+                <FormLabel sx={{ fontFamily: "quicksand" }}>Title</FormLabel>
+                <TextField
+                  onChange={handleChange}
+                  name={key}
+                  value={inputs[key].title}
+                  variant="standard"
+                  margin="normal"
+                />
+              </Fragment>
+            ))}
             <Button
               type="submit"
               color="warning"

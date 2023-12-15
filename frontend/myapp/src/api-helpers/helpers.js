@@ -15,92 +15,112 @@ export const getAllPosts = async () => {
 };
 
 export const sendAuthRequest = async (signup, data) => {
-  const res = await axios
-    .post(`${BASE_URL}/user/${signup ? "signup" : "login"}/`, {
-      name: data.name ? data.name : "",
-      email: data.email,
-      password: data.password,
-    })
-    .catch((err) => console.log(err));
+  try {
+    const res = await axios.post(
+      `${BASE_URL}/user/${signup ? "signup" : "login"}/`,
+      {
+        name: data.name ? data.name : "",
+        email: data.email,
+        password: data.password,
+      }
+    );
 
-  if (res.status !== 200 && res.status !== 201) {
-    return console.log("Unable to Authenticate");
+    if (res.status !== 200 && res.status !== 201) {
+      return console.log("Unable to Authenticate");
+    }
+
+    const resData = await res.data;
+
+    return resData;
+  } catch (error) {
+    throw error;
   }
-
-  const resData = await res.data;
-
-  return resData;
 };
 
 export const addPost = async (data) => {
-  const res = await axios
-    .post(`${BASE_URL}/posts/`, {
+  try {
+    const res = await axios.post(`${BASE_URL}/posts/`, {
       title: data.title,
       description: data.description,
       location: data.location,
       image: data.imageUrl,
       date: data.date,
       user: localStorage.getItem("userId"),
-    })
-    .catch((err) => console.log(err));
+    });
 
-  if (res.status !== 201) {
-    return console.log("Error Occurred");
+    if (res.status !== 201) {
+      return console.log("Error Occurred");
+    }
+
+    const resData = await res.data;
+
+    return resData;
+  } catch (error) {
+    throw error;
   }
-
-  const resData = await res.data;
-  return resData;
 };
 
 export const getPostDetails = async (id) => {
-  const res = await axios.get(`${BASE_URL}/posts/${id}`).catch((err) => console.log(err));
-  if (res.status !== 200) {
-    return console.log("Unable to fetch diary");
-  }
+  try {
+    const res = await axios.get(`${BASE_URL}/posts/${id}`);
+    if (res.status !== 200) {
+      return console.log("Unable to fetch diary");
+    }
 
-  const resData = await res.data;
-  return resData;
+    const resData = await res.data;
+    return resData;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const postUpdate = async (data, id) => {
-  const res = await axios
-    .put(`${BASE_URL}/posts/${id}`, {
+  try {
+    const res = await axios.put(`${BASE_URL}/posts/${id}`, {
       title: data.title,
       description: data.description,
       location: data.location,
       image: data.imageUrl,
-    })
-    .catch((err) => console.log(err));
+    });
 
-  if (res.status !== 200) {
-    return console.log("Unable to udpate");
+    if (res.status !== 200) {
+      return console.log("Unable to udpate");
+    }
+
+    const resData = await res.data;
+    return resData;
+  } catch (error) {
+    throw error;
   }
-
-  const resData = await res.data;
-  return resData;
 };
 
 export const postDelete = async (id) => {
-  const res = await axios
-    .delete(`${BASE_URL}/posts/${id}`)
-    .catch((err) => console.log(err));
+  try {
+    const res = await axios.delete(`${BASE_URL}/posts/${id}`);
 
-  if (res.status !== 200) {
-    return console.log("Unable to delete");
+    if (res.status !== 200) {
+      return console.log("Unable to delete");
+    }
+
+    const resData = await res.data;
+    return resData;
+  } catch (error) {
+    throw error;
   }
-
-  const resData = await res.data;
-  return resData;
 };
 
 export const getUserDetails = async () => {
-  const id = localStorage.getItem("userId");
-  const res = await axios.get(`${BASE_URL}/user/${id}`).catch((err) => console.log(err));
+  try {
+    const id = localStorage.getItem("userId");
+    const res = await axios.get(`${BASE_URL}/user/${id}`);
 
-  if (res.status !== 200) {
-    return console.log("No user found");
+    if (res.status !== 200) {
+      return console.log("No user found");
+    }
+
+    const resData = await res.data;
+    return resData;
+  } catch (error) {
+    throw error;
   }
-
-  const resData = await res.data;
-  return resData;
 };
